@@ -65,6 +65,15 @@ class Room {
       member.send(JSON.stringify(data));
     }
   }
+
+  /** Send joke to current user in the room.
+   *
+   * @param data {string} joke to send
+   * */
+
+  getJoke(data, user) {
+    user.send(JSON.stringify(data));
+  }
 }
 
 module.exports = Room;

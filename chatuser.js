@@ -60,6 +60,19 @@ class ChatUser {
     });
   }
 
+  /** Handle a joke: show a joke to current user.
+   *
+   * @param joke {string} joke to send
+   * */
+
+  handleJoke(user) {
+    this.room.getJoke({
+      name: this.name,
+      type: "get-joke",
+      text: "joke is here",
+    }, user);
+  }
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -75,6 +88,7 @@ class ChatUser {
 
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
+    else if (msg.type === "get-joke") this.handleJoke(this);
     else throw new Error(`bad message: ${msg.type}`);
   }
 
