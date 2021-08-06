@@ -66,6 +66,19 @@ class Room {
     }
   }
 
+  /** Send list of members to current user in the room.
+   *
+   * @param data {[string, string, ...]} list of members
+   * */
+
+  getMembers(data, user) {
+    let memberMessage = "In room: ";
+    let memberNames = [...this.members].map(m => { return m.name});
+    memberMessage += memberNames.join(", ");
+    data.text = memberMessage;
+    user.send(JSON.stringify(data));
+  }
+
   /** Send joke to current user in the room.
    *
    * @param data {string} joke to send

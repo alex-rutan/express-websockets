@@ -73,6 +73,19 @@ class ChatUser {
     }, user);
   }
 
+  /** Handle members: show members to current user.
+   *
+   * @param members {string} members to send
+   * */
+
+  handleMembers(user) {
+    this.room.getMembers({
+      name: this.name,
+      type: "get-members",
+      text: "",
+    }, user);
+  }
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -89,6 +102,7 @@ class ChatUser {
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
     else if (msg.type === "get-joke") this.handleJoke(this);
+    else if (msg.type === "get-members") this.handleMembers(this);
     else throw new Error(`bad message: ${msg.type}`);
   }
 
