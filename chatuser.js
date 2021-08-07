@@ -86,6 +86,20 @@ class ChatUser {
     }, user);
   }
 
+  /** Handle private message: show a message only to the user specified.
+   *
+   * @param privateMessage {string} members to send
+   * */
+
+  handlePrivMsg(user) {
+    this.room.sendPriMsg({
+      name: this.name,
+      type: "private-message",
+      text: text,
+      targetUser: targetUser
+    }, user);
+  };
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -103,6 +117,7 @@ class ChatUser {
     else if (msg.type === "chat") this.handleChat(msg.text);
     else if (msg.type === "get-joke") this.handleJoke(this);
     else if (msg.type === "get-members") this.handleMembers(this);
+    else if (msg.type === "private-message") this.handlePrivMsg(this);
     else throw new Error(`bad message: ${msg.type}`);
   }
 

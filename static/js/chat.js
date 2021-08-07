@@ -1,5 +1,7 @@
 /** Client-side of groupchat. */
 
+const { text } = require("express");
+
 const urlParts = document.URL.split("/");
 const roomName = urlParts[urlParts.length - 1];
 const ws = new WebSocket(`ws://localhost:3000/chat/${roomName}`);
@@ -63,9 +65,20 @@ ws.onclose = function (evt) {
 $("form").submit(function (evt) {
   evt.preventDefault();
 
-  const textInput = $("#m").val()
+  const textInput = $("#m").val();
 
   let data;
+
+  if (textInput.startsWith("/priv ")){
+    let targetUser = textInput.split(" ")[1];
+    let text = textInput.split(" ").slice(2).join(" ")
+    data = { 
+      type: "private-message", 
+      text: text,
+      targetUser: targetUser
+    }
+  }
+
   if (textInput === "/joke") {
     data = { type: "get-joke" }
   } 
